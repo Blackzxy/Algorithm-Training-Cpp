@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.cpp": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "cstdlib": "cpp"
     }
 }
