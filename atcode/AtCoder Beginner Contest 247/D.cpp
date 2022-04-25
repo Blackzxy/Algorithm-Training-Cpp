@@ -55,55 +55,47 @@ inline int read() {
 	return an * x;
 }
 
-const int N = 2e5 + 5;
-int a[N];
-int X,Y;
-int n;
-ll res=0;
-
-ll cal(vector<int> &vec){
-    ll ans=0;
-    int l = 0, r = vec.size()-1;
-    int lp=l,rp=l;
-    int cnt_max=0, cnt_min = 0;
-    //int len = r-l+1;
-    while(lp<=r){
-        while(rp<=r && (cnt_max==0 || cnt_min==0)){
-            if(vec[rp]==X)cnt_max+=1;
-            if(vec[rp]==Y)cnt_min+=1;
-            rp+=1;
-        }
-        if(cnt_max>0 && cnt_min>0){
-            ans = ans+ll(r-rp+2);
-        }
-        if(vec[lp]==X)cnt_max-=1;
-        if(vec[lp]==Y)cnt_min-=1;
-        lp+=1;
-    }
-    return ans;
-}
-
-void sol(){
-    int i=0;
-    int st=0,ed=0;
-    while(i<n){
-        // split to subproblem
-        vector<int> vec;
-        while(i<n && a[i]<=X && a[i]>=Y){vec.push_back(a[i]);i+=1;}
-        if(vec.size()>0){
-            res+= cal(vec);
-        }
-        else i+=1;
-        
-    }
-}
+int Q;
+//queue<ll> q;
+ll ans = 0;
+const int N = 2e5+5;
+ll v[N],pos[N];
+ll cnt=1;
+ll cur_p = 1;
+ll real_p = 0;
 
 
 int main(){
     //ios::sync_with_stdio(false);
-    n = read();
-    X = read(); Y = read();
-    for(int i=0;i<n;i++) a[i] = read();
-    sol();
-    printf("%lld\n", res);
+    Q = read();
+    while(Q--){
+        int q; q = read();
+        if(q==1){
+            ll x,c; scanf("%lld %lld", &x,&c);
+            pos[cnt] = pos[cnt-1]+c;
+            v[cnt] = x;
+            cnt+=1;
+        }
+        else{
+            ll c; scanf("%lld", &c);
+            ll next_p = real_p+c;
+            //cout<<"next pos:"<<next_p<<endl;
+            ans=0;
+            for(;cur_p<cnt;cur_p++){
+                if(pos[cur_p]<=next_p){
+                    ans+= ll(v[cur_p]*(pos[cur_p]-real_p));
+                    real_p = pos[cur_p];
+                }
+                else{
+                    ans+= ll(v[cur_p]*(next_p-real_p));
+                    real_p = next_p;
+                    break;
+                }
+
+            }
+            
+            //cout<<real_p<<endl;
+            printf("%lld\n", ans);
+        }
+    }
 }
