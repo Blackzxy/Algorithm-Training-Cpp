@@ -1,3 +1,4 @@
+// 单调队列优化DP
 #include<iostream>
 #include<cstdio>
 #include<algorithm>
@@ -54,8 +55,36 @@ inline int read() {
 	}
 	return an * x;
 }
+const int N = 1e5+4;
+int e[N];
+int n,k;
+ll ans;
+ll dp[N][2];
+ll sum[N];
+ll q[N];
+// dp[i][0] = max(dp[i-1][0],dp[i-1][1]) 0:not choose i-th
+// dp[i][1] = max(dp[j]+sum[i]-sum[j]) 1: choose i-th
 
 int main(){
     //ios::sync_with_stdio(false);
-    
+    n = read(); k = read();
+    for(int i=1;i<=n;i++){
+        e[i] = read();
+        sum[i] = sum[i-1]+ll(e[i]);
+    }
+    int head=0,tail=0;
+    q[head]=0;q[tail]=0;
+    for(int i=1;i<=n;i++){
+        // not choose
+        dp[i][0] = max(dp[i-1][0],dp[i-1][1]);
+
+        // maintain the head
+        while(head<=tail && q[head]<i-k)++head;
+        dp[i][1] = sum[i]-sum[q[head]]+ll(dp[q[head]][0]);
+        // maintain the tail
+        while(head<=tail && dp[i][0]-sum[i]>dp[q[tail]][0]-sum[q[tail]])--tail;
+        q[++tail] = i;
+    }
+    printf("%lld",ll(max(dp[n][0],dp[n][1])));
+
 }
