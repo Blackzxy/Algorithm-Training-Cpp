@@ -2,6 +2,7 @@
     "files.associations": {
         "*.cpp": "cpp",
         "queue": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "utility": "cpp"
     }
 }
