@@ -76,7 +76,7 @@ int cal_sum(string s){
 }
 
 int main(){
-    ios::sync_with_stdio(false);
+    //ios::sync_with_stdio(false);
     t = read();
     while(t--){
         cin>>s;
