@@ -55,8 +55,20 @@ inline int read() {
 	return an * x;
 }
 
+int t;
+int m;
+
+int find_round(int x){
+    int ans = 1;
+    while(ans<=x){ans = ans*10;}
+    return ans/10;
+}
 
 int main(){
     //ios::sync_with_stdio(false);
-    
+    t = read();
+    while(t--){
+        scanf("%d",&m);
+        cout<<m - find_round(m)<<endl;
+    }
 }

@@ -55,8 +55,44 @@ inline int read() {
 	return an * x;
 }
 
+int t;
+int n;
+
+void solve(){
+    n = read();
+    multiset<int> a, b;
+    for(int i=0;i<n;i++){
+        int x = read();
+        while(x%2==0)x/=2;
+        a.insert(x);
+    }
+
+    for(int i=0;i<n;i++){
+        int x = read(); b.insert(x);
+    }
+
+    while(!b.empty()){
+        // max value of b
+        int x = *b.rbegin();
+        if(!a.count(x)){
+            // cannot find x
+            if(x==1) break;
+            b.erase(b.find(x));b.insert(x/2);
+        }
+        else{
+            // find x
+            a.erase(a.find(x)); b.erase(b.find(x));
+        }
+    }
+    if(b.empty()) printf("YES\n");
+    else printf("NO\n");
+
+}
 
 int main(){
     //ios::sync_with_stdio(false);
-    
+    t = read();
+    while(t--){
+        solve();
+    }
 }

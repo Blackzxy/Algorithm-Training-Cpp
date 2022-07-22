@@ -54,9 +54,47 @@ inline int read() {
 	}
 	return an * x;
 }
+int t;
+map<int, vector<int> > edge;
+int vis[200005];
 
+int dfs(int x){
+    vis[x] = 1;
+    for(auto v: edge[x]){
+        if(!vis[v])return dfs(v)+1;
+    }
+    return 1;
+}
+
+void solve(){
+    int n = read();
+    edge.clear(); ms(vis);
+    bool fg = false;
+
+    for(int i=0;i<n;i++){
+        int a = read(), b = read();
+        edge[a].push_back(b); edge[b].push_back(a);
+        if(a==b || edge[a].size()>2 || edge[b].size()>2)fg = true;
+    }
+    if(fg){
+        printf("NO\n");
+        return;
+    }
+    for(int i=1;i<=n;i++){
+        if(!vis[i]){
+            if(dfs(i)%2){
+                printf("NO\n");
+                return;
+            }
+        }
+    }
+    printf("YES\n");
+}
 
 int main(){
     //ios::sync_with_stdio(false);
-    
+    t = read();
+    while(t--){
+        solve();
+    }
 }

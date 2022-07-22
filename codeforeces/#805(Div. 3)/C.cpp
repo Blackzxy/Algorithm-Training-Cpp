@@ -54,9 +54,41 @@ inline int read() {
 	}
 	return an * x;
 }
+int n;
+int t;
+
+int u[200005];
 
 
 int main(){
     //ios::sync_with_stdio(false);
-    
+    cin>>t;
+    while(t--){
+        cout<<endl;
+        n = read();
+        int k = read();
+        ms(u);
+        map<int, pair<int,int> > loc;
+
+        for(int i=0;i<n;i++)u[i] = read();
+        for(int i=0;i<n;i++){
+            if(!loc.count(u[i])){
+                loc[u[i]] = make_pair(i,i);
+            }
+            else{
+                loc[u[i]].second = i;
+            }
+        }
+
+        while(k--){
+            int a =read(), b = read();
+            if(!loc.count(a) || !loc.count(b) || loc[a].first>loc[b].second){
+                printf("NO\n");
+            }
+            else{
+                printf("YES\n");
+            }
+        }
+    }
+
 }
